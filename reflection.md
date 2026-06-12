@@ -26,9 +26,11 @@ Document at least 3 bugs you found. Add rows as needed.
 ## 2. How did you use AI as a teammate?
 
 - Which AI tools did you use on this project (for example: ChatGPT, Gemini, Copilot)?
--- Anthropic
+  - Anthropic
 - Give one example of an AI suggestion that was correct (including what the AI suggested and how you verified the result).
+  - AI suggested that history/status was not updated on new game, I manually checked code and figured out it was true then fixed it.
 - Give one example of an AI suggestion that was incorrect or misleading (including what the AI suggested and how you verified the result).
+  - AI suggested that score should be changed at new game, I figured out that score shouldn't be reset on new games.
 
 ---
 

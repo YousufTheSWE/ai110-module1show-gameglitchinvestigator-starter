@@ -5,10 +5,11 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 ## 1. What was broken when you started?
 
 - What did the game look like the first time you ran it?
+  - It had questionable text like "Something is off" and it wasn't as responsive. It also gave incorrect hints.
 - List at least two concrete bugs you noticed at the start  
--- One bug is giving me GO LOWER when I should've went higher!
--- Giving me a negative score!
--- When I disabled show hint, it didn't decrement my attempts.
+  - One bug is giving me GO LOWER when I should've went higher!
+  - Giving me a negative score!
+  - When I disabled show hint, it didn't decrement my attempts.
 
 **Bug Reproduction Log**
 

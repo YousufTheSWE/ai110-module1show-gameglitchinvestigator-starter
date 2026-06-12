@@ -6,7 +6,9 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 
 - What did the game look like the first time you ran it?
 - List at least two concrete bugs you noticed at the start  
-  (for example: "the hints were backwards").
+One bug is giving me GO LOWER when I should've went higher!
+Giving me a negative score!
+When I disabled show hint, it didn't decrement my attempts.
 
 **Bug Reproduction Log**
 
@@ -14,9 +16,9 @@ Document at least 3 bugs you found. Add rows as needed.
 
 | Input | Expected Behavior | Actual Behavior | Console Output / Error |
 |-------|-------------------|-----------------|------------------------|
-| | | | |
-| | | | |
-| | | | |
+| 50    | Go Higher         | Go LOWER        | N/A                    |
+| 50 (with show hints off) | decrement attempts | no attempts changed | N/A |
+| 12    | Positive/zeo score | score of -35 | N/A |
 
 ---
 

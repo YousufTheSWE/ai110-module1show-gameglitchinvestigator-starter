@@ -30,7 +30,7 @@ Document at least 3 bugs you found. Add rows as needed.
 - Give one example of an AI suggestion that was correct (including what the AI suggested and how you verified the result).
   - AI suggested that history/status was not updated on new game, I manually checked code and figured out it was true then fixed it.
 - Give one example of an AI suggestion that was incorrect or misleading (including what the AI suggested and how you verified the result).
-  - AI suggested that score should be changed at new game, I figured out that score shouldn't be reset on new games.
+  - AI suggested changing one line from  points = 100 - 10 * (attempt_number + 1) to points = 100 - 10 * attempt_number, when it should be points = 100 - 10 * (attempt_number - 1). This is because 1 attempt is the most perfect score.
 
 ---
 
@@ -40,13 +40,16 @@ Document at least 3 bugs you found. Add rows as needed.
   - I reran the streamlit code, then redid a game.
 - Describe at least one test you ran (manual or using pytest)  
   and what it showed you about your code.
+  - I tested trying a new game after playing 1 game, to see if the previous bug was fixed.
 - Did AI help you design or understand any tests? How?
+  - I mostly just did manual tests, though I did try tests in certain ways based on what the AI said was wrong before.
 
 ---
 
 ## 4. What did you learn about Streamlit and state?
 
 - How would you explain Streamlit "reruns" and session state to a friend who has never used Streamlit?
+  - Streamlit state needs to be manually reset unless you stop the program and rerun it.
 
 ---
 

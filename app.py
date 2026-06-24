@@ -7,7 +7,9 @@ def get_range_for_difficulty(difficulty: str):
     if difficulty == "Normal":
         return 1, 100
     if difficulty == "Hard":
-        return 1, 50
+        # FIX: Hard was 1-50, making it EASIER than Normal (1-100). Difficulty
+        # was inverted. Hard now has the widest range so it's genuinely hardest.
+        return 1, 200
     return 1, 100
 
 
@@ -30,33 +32,32 @@ def parse_guess(raw: str):
 
 
 def check_guess(guess, secret):
+    # FIX: callers now always pass an int secret (see the stringify fix below),
+    # so comparisons are purely numeric. The old TypeError fallback did
+    # LEXICOGRAPHIC string comparison ("12" < "9"), which gave wrong
+    # higher/lower hints. Removed it entirely now that the root cause is gone.
     if guess == secret:
         return "Win", "🎉 Correct!"
-
-    try:
-        if guess > secret:
-            return "Too High", "📈 Go HIGHER!"
-        else:
-            return "Too Low", "📉 Go LOWER!"
-    except TypeError:
-        g = str(guess)
-        if g == secret:
-            return "Win", "🎉 Correct!"
-        if g > secret:
-            return "Too High", "📈 Go HIGHER!"
-        return "Too Low", "📉 Go LOWER!"
+    if guess > secret:
+        return "Too High", "📈 Go HIGHER!"
+    return "Too Low", "📉 Go LOWER!"
 
 
 def update_score(current_score: int, outcome: str, attempt_number: int):
     if outcome == "Win":
-        points = 100 - 10 * (attempt_number + 1)
+        # FIX: was `100 - 10 * (attempt_number + 1)`. Since attempts is
+        # incremented before scoring, the extra +1 double-penalized (a
+        # first-guess win scored 70 instead of 90). Removed the +1.
+         # AI made a mistake and forget to make it -1, so 1 attempt is a perfect score.
+        points = 100 - 10 * (attempt_number - 1)
         if points < 10:
             points = 10
         return current_score + points
 
     if outcome == "Too High":
-        if attempt_number % 2 == 0:
-            return current_score + 5
+        # FIX: even-numbered "Too High" attempts used to ADD 5 points,
+        # rewarding a wrong guess. A wrong guess should always cost points,
+        # matching the "Too Low" branch.
         return current_score - 5
 
     if outcome == "Too Low":
@@ -107,7 +108,9 @@ if "history" not in st.session_state:
 st.subheader("Make a guess")
 
 st.info(
-    f"Guess a number between 1 and 100. "
+    # FIX: range was hardcoded "1 and 100" regardless of difficulty. Now uses
+    # the actual low/high for the selected difficulty.
+    f"Guess a number between {low} and {high}. "
     f"Attempts left: {attempt_limit - st.session_state.attempts}"
 )
 
@@ -147,20 +150,22 @@ if st.session_state.status != "playing":
     st.stop()
 
 if submit:
-    st.session_state.attempts += 1
-
     ok, guess_int, err = parse_guess(raw_guess)
 
     if not ok:
+        # FIX: attempts was incremented before parsing, so invalid input
+        # (e.g. "abc") burned a turn. We now only count an attempt once we
+        # have a valid numeric guess.
         st.session_state.history.append(raw_guess)
         st.error(err)
     else:
+        st.session_state.attempts += 1
         st.session_state.history.append(guess_int)
 
-        if st.session_state.attempts % 2 == 0:
-            secret = str(st.session_state.secret)
-        else:
-            secret = st.session_state.secret
+        # FIX: the secret used to be converted to a string on even-numbered
+        # attempts, which broke comparisons (str vs int) and produced wrong
+        # higher/lower hints. Always compare against the int secret.
+        secret = st.session_state.secret
 
         outcome, message = check_guess(guess_int, secret)
 

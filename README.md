@@ -33,21 +33,25 @@ It wrote the code, ran away, and now the game is unplayable.
 
 Describe your fixed game in numbered steps so a reader can follow along without watching a video:
 
-1. <!-- Describe this step -->
-2. <!-- Describe this step -->
-3. <!-- Describe this step -->
-4. <!-- Describe this step -->
-5. <!-- Add more steps as needed -->
+1. Start a game at a certain difficulty
+2. Enter guess
+3. Hit submit, and it will tell you high or low.
+4. Repeat steps 2-3 until you win or lose.
+5. Play new game
 
 **Screenshot** *(optional)*: <!-- Insert a screenshot of your fixed, winning game here -->
 
 ## 🧪 Test Results
 
-```
-# Paste your pytest output here, e.g.:
-# pytest tests/
-# ========================= X passed in 0.XXs =========================
-```
+======================================================================================================== test session starts =========================================================================================================
+platform win32 -- Python 3.14.0, pytest-9.0.3, pluggy-1.6.0
+rootdir: C:\Users\yousu\Codepath\ai110-module1show-gameglitchinvestigator-starter
+plugins: anyio-4.13.0
+collected 8 items                                                                                                                                                                                                                     
+
+tests\test_game_logic.py ........                                                                                                                                                                                               [100%]
+
+========================================================================================================= 8 passed in 0.75s ==========================================================================================================
 
 ## 🚀 Stretch Features
 
